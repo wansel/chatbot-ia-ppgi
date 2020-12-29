@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml>
+    
+
+<category>
+    <pattern>*</pattern>
+    <template>
+        <random>
+            <li>Bom dia, sou um chatbot para triagem de pacientes com sintomas da covid-19. Você está bem?</li>
+        </random>
+        <think>
+            <set name="topic">ESTADO ATUAL</set>
+        </think>
+    </template>
+</category>
+
+<topic name="ESTADO ATUAL">
+    <category>
+        <pattern>Sim</pattern>
+        <template>Que otimo. Qual a sua idade?
+            <think>
+                <set name="estabem">sim</set>
+                <think><set name="topic">IDADE</set></think>
+            </think>
+        </template>
+    </category>
+    <category>
+        <pattern>nao</pattern>
+        <template>Lamento... Qual a sua idade?
+            <think>
+                <set name="estabem">nao</set>
+                <think><set name="topic">IDADE</set></think>
+            </think>
+        </template>
+    </category>
+</topic>
+
+<topic name="IDADE">
+    <category>
+        <pattern>*</pattern>
+        <template>Certo. Você está com febre?
+            <think>
+                <set name="idade"><star index="1"></star></set>
+                <think><set name="topic">FEBRE</set></think>
+            </think>
+        </template>
+    </category>
+</topic>
+
+<topic name="FEBRE">
+    <category>
+        <pattern>sim</pattern>
+        <template>Você tem tossido ou está com falta de ar/dificuldade para respirar?
+        <think>
+            <set name="febre">sim</set>
+            <set name="topic">TOSSE</set>
+        </think>
+        </template>
+    </category>
+    <category>
+        <pattern>nao</pattern>
+        <template>Você tem tossido ou está com falta de ar/dificuldade para respirar?
+        <think>
+            <set name="febre">nao</set>
+            <set name="topic">TOSSE</set>
+        </think>
+        </template>
+    </category>
+    <category>
+        <pattern>*</pattern>
+        <template>Consegue me dizer 'sim' ou 'nao'?
+        </template>
+    </category>
+</topic>
+
+<topic name="TOSSE">
+    <category>
+        <pattern>sim</pattern>
+        <template>Você faz parte de algum grupo de risco? Qual?
+        <think>
+            <set name="tosseOuFaltaDeAr">sim</set>
+            <set name="topic">COMORBIDADE</set>
+        </think>
+        </template>
+    </category>
+    <category>
+        <pattern>nao</pattern>
+        <template>Você faz parte de algum grupo de risco?
+            <think>
+                <set name="tosseOuFaltaDeAr">nao</set>
+                <set name="topic">COMORBIDADE</set>
+            </think>
+        </template>
+    </category>
+</topic>
+
+
+<topic name="COMORBIDADE">
+    <category>
+        <pattern>sim</pattern>
+        <template>
+            Poderia me dizer se sente algum desses sintomas?
+            <ul>
+                <li>Fadiga</li>
+                <li>Dor de cabeça</li>
+                <li>Dores musculares</li>
+                <li>Dor de garganta ou dificuldade para engolir</li>
+                <li>Coriza</li>
+                <li>Calafrios</li>
+                <li>Produção de escarro</li>
+                <li>Congestão conjuntival (olho vermelho)</li>
+                <li>Diarreia ou náusea</li>
+                <li>Sinais de cianose (descoloração azulada da pele)</li>
+                <li>Desidratação ou falta de apetite</li>
+            </ul>
+            <think>
+                <set name="comorbidade">sim</set>
+                <set name="topic">OUTROSSINTOMAS</set>
+            </think>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>nao</pattern>
+        <template>
+            Poderia me dizer se sente alguns desses sintomas?
+            <ul>
+                <li>Fadiga</li>
+                <li>Dor de cabeça</li>
+                <li>Dores musculares</li>
+                <li>Dor de garganta ou dificuldade para engolir</li>
+                <li>Coriza</li>
+                <li>Calafrios</li>
+                <li>Produção de escarro</li>
+                <li>Congestão conjuntival (olho vermelho)</li>
+                <li>Diarreia ou náusea</li>
+                <li>Sinais de cianose (descoloração azulada da pele)</li>
+                <li>Desidratação ou falta de apetite</li>
+            </ul>
+            <think>
+                <set name="comorbidade">nao</set>
+                <set name="topic">OUTROSSINTOMAS</set>
+            </think>
+        </template>
+    </category>
+    
+    <category>
+        <pattern>*</pattern>
+        <template>Consegue me dizer 'sim' ou 'nao'?
+        </template>
+    </category>
+    
+</topic>
+
+<topic name="OUTROSSINTOMAS">
+    <category>
+        <pattern>*</pattern>
+        <template>
+            O SUS recomenda a realização do teste a partir do décimo dia do aparecimento dos sintomas. Caso os sintomas piorem, não hesite em procurar uma unidade de saúde.
+            Seus dados serão avaliados por um profissional da saúde. Poderia nos passar seu telefone?
+        <think>
+            <set name="outrosSintomas"><star></star></set>
+            <set name="topic">CONCLUSAO</set>
+        </think>    
+        </template>
+        
+    </category>
+</topic>
+
+<topic name="CONCLUSAO">
+    <category>
+        <pattern>*</pattern>
+        <template>
+            Obrigado por ter utilizado nosso serviço.
+            <think><set name="telefone"><star></star></set></think>
+        </template>
+    </category>
+</topic>
+
+
+</aiml>
